@@ -7,8 +7,11 @@ import (
 	"net"
 
 	"github.com/utahta/grpc-go-proxy-example/helloworld"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
 const (
@@ -29,6 +32,23 @@ func (s *server) SayHello(ctx context.Context, in *helloworld.HelloRequest) (*he
 	}
 
 	log.Printf("Received: %v\n", in.Name)
+
+	if in.Name == "error" {
+		s := status.New(codes.InvalidArgument, "invalid argument error")
+		s, err := s.WithDetails(&errdetails.BadRequest{
+			FieldViolations: []*errdetails.BadRequest_FieldViolation{
+				{
+					Field:       "Name",
+					Description: "error desu",
+				},
+			},
+		})
+		if err != nil {
+			s = status.New(codes.Internal, fmt.Sprintf("failed to append invalid argument details message: %v", err))
+		}
+		return nil, s.Err()
+	}
+
 	return &helloworld.HelloReply{Message: "Hello " + in.Name}, nil
 }
 

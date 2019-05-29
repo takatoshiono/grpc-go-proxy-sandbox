@@ -25,6 +25,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:a50287005b0b6f40c14957e0d1cc5a3e792adca5842a410ece790521daf92f15"
+  name = "github.com/utahta/grpc-go-proxy-example"
+  packages = ["helloworld"]
+  pruneopts = "UT"
+  revision = "93788e6ba639af6b741489b9161254e4a14dc194"
+
+[[projects]]
+  branch = "master"
   digest = "1:4512c74e2c934a151fa9246cdc565d29611f53295bfb05e7a6275e80ee540a0c"
   name = "golang.org/x/net"
   packages = [
@@ -72,9 +80,12 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:c3076e7defee87de1236f1814beb588f40a75544c60121e6eb38b3b3721783e2"
+  digest = "1:4ac715d0cd21b7c9c5cc7bfd49c58ae261dfe9246e9e3881c01bbd8939f3400e"
   name = "google.golang.org/genproto"
-  packages = ["googleapis/rpc/status"]
+  packages = [
+    "googleapis/rpc/errdetails",
+    "googleapis/rpc/status",
+  ]
   pruneopts = "UT"
   revision = "5fe7a883aa19554f42890211544aa549836af7b7"
 
@@ -124,11 +135,15 @@
   input-imports = [
     "github.com/golang/protobuf/proto",
     "github.com/grpc-ecosystem/go-grpc-middleware",
+    "github.com/utahta/grpc-go-proxy-example/helloworld",
     "golang.org/x/net/context",
+    "google.golang.org/genproto/googleapis/rpc/errdetails",
     "google.golang.org/grpc",
+    "google.golang.org/grpc/codes",
     "google.golang.org/grpc/encoding",
     "google.golang.org/grpc/encoding/proto",
     "google.golang.org/grpc/metadata",
+    "google.golang.org/grpc/status",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
